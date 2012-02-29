@@ -1,5 +1,6 @@
 <?php
 /**
+ *本来是为了调试SAE<http://sinaapp.com>程序用的。当时SAE没有本地SDK，所以就找到了saemysql.class.php，果然好用，于是稍微改造了一下。用了半年多了。强烈推荐。
  * SBM Mysql服务
  *
  * 支持主从分离
