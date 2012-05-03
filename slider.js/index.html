@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Slider测试页面</title>
+<style type="text/css">
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	color: #484848;
+	font: 12px/1.4 Arial, Helvetica, sans-serif;
+	line-height:20px;
+}
+img {
+	display:block;/*IE6图片边距bug*/
+	border:none;
+}
+.code {
+	background-color: #F0F0F0;
+	border: 1px solid #A0A0A0;
+	padding: 0.7em;
+	text-align: center;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+h1 {
+	border-bottom: 1px solid #A0A0A0;
+	color: black;
+	font-size: 180%;
+	font-weight: bold;
+	margin: 15px 0 15px;
+	padding-bottom:5px;
+}
+h1 .subtitle {
+	font-size: 75%;
+}
+#page {
+	width:960px;
+	margin:0 auto;
+	margin-top:20px;
+	margin-bottom:20px;
+}
+#main {
+	float:left;
+	width:780px;
+}
+#main ol {
+	margin-left:30px;
+}
+#main p {
+	margin-top:5px;
+	margin-bottom:5px;
+}
+#nav {
+	float:left;
+	width:180px;
+}
+#nav ul {
+	margin: 0.7em 0 1em 2em;
+	list-style: none outside none;
+}
+#nav ul li {
+	border-bottom: 1px solid #A0A0A0;
+	display: block;
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+#nav ul li a {
+	display: block;
+	padding: 4px;
+	color: #101010;
+	text-decoration: none;
+}
+#nav ul li a:hover {
+	background:#505050;
+	color:white;
+	border-bottom:none;
+}
+a {
+	color: #101010;
+	text-decoration: underline;
+}
+/**slider css*/
+#slideHandler {
+	position:absolute;
+	left:670px;
+	top:110px;
+	z-index:10;
+}
+#slideHandler a {
+	float:left;
+	display:block;
+	width:20px;
+	height:20px;
+	border:1px solid black;
+	background:#FFFFCC;
+	line-height:20px;
+	text-align:center;
+	margin-left:3px;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+	text-decoration:none;
+}
+#slideHandler a.current {
+	background:#FF0000;
+	color:white;
+}
+#slideHandler a:hover {
+	background:#00FF00;
+}
+#slideContent {
+	width:3000px;
+}
+/** taobao 样式*/
+#taobao_content {
+	width:490px;
+	height:680px;
+}
+#taobao_handler {
+	position:absolute;
+	top:145px;
+	left:395px;
+	height:20px;
+	z-index:10;
+}
+#taobao_handler a {
+	float:left;
+	border-radius: 20px 20px 20px 20px;
+	display:block;
+	width:20px;
+	height:20px;
+	line-height:20px;
+	text-align:center;
+	color:#DE7D4B;
+	background:white;
+	filter:alpha(opacity=70);
+	-moz-opacity:0.7;
+	-khtml-opacity: 0.7;
+	opacity: 0.7;
+	margin-left:3px;
+	text-decoration:none;
+}
+#taobao_handler a.current {
+	color:white;
+	background:#DE7D4B;
+}
+/*Tab 样式*/
+#tab_content {
+	width:1510px;
+	height:100px;
+	background:#FFF;
+}
+#tab_content div {
+	width:300px;
+	height:100px;
+	float:left;
+	display:block;
+	padding-top:20px;
+}
+#tab_handler {
+	width:300px;
+	height:26px;
+	margin-bottom:-1px;
+	background:#D8D8D8;
+}
+#tab_handler a {
+	width:60px;
+	text-align:center;
+	display:block;
+	height:25px;
+	float:left;
+	text-decoration:none;
+	font-weight:bold;
+	line-height:24px;
+}
+#tab_handler a.current {
+	background:white;
+}
+/*fade*/
+#fade_handler {
+	position:absolute;
+	top:150px;
+	left:130px;
+	z-index:10;
+}
+#fade_handler a {
+	text-decoration:none;
+	width:20px;
+	height:20px;
+	display:block;
+	line-height:20px;
+	text-align:center;
+	float:left;
+	margin-left:3px;
+	color:gray;
+	background:black;
+	filter:alpha(opacity=40);
+	-moz-opacity:0.4;
+	-khtml-opacity: 0.4;
+	opacity: 0.4;
+	margin-left:3px;
+}
+#fade_handler a.current {
+	filter:alpha(opacity=100);
+	-moz-opacity:1;
+	-khtml-opacity: 1;
+	opacity: 1;
+}
+#fade_content {
+	position:absolute;
+	width:930px;
+	height:230px;
+}
+#fade_content img {
+	float:left;
+}
+/*带左右导航*/
+#lr_handler {
+	height:20px;
+}
+#lr_handler a {
+	font-size:0;
+	display:block;
+	float:left;
+	width:8px;
+	height:8px;
+	vertical-align:middle;
+	margin-left:4px;
+	margin-top:6px;
+	background:url(images/product-nav.png) -36px 0 no-repeat;
+}
+#lr_handler a.current {
+	background:url(images/product-nav.png) -36px -8px no-repeat;
+}
+#lr_handler a:hover {
+	background:url(images/product-nav.png) -36px -16px no-repeat;
+}
+#lr_handler a.left {
+	margin-top:1px;
+	width:18px;
+	height:18px;
+	background:url(images/product-nav.png) 0 0 no-repeat;
+}
+#lr_handler a.left:hover {
+	background:url(images/product-nav.png) 0 -18px no-repeat;
+}
+#lr_handler a.right {
+	margin-top:1px;
+	width:18px;
+	height:18px;
+	background:url(images/product-nav.png) -18px 0 no-repeat;
+}
+#lr_handler a.right:hover {
+	background:url(images/product-nav.png) -18px -18px no-repeat;
+}
+#lr_content {
+	position:absolute;
+	width:930px;
+	height:230px;
+}
+#lr_content img {
+	float:left;
+}
+/*只有左右导航*/
+ #only_lrcontent {
+	width:800px;
+	height:20px;
+}
+#only_lrcontent a {
+	text-decoration:none;
+	width:250px;
+	height:20px;
+	display:block;
+	float:left;
+	text-indent:10px;
+}
+#only_lrcontent a:hover {
+	color:red;
+	text-decoration:underline;
+}
+#only_lrhandler {
+	background:#D8D8D8;
+	border:1px solid #D8D8D8;
+	height:20px;
+	width:42px;
+	float:left;
+}
+#only_lrhandler a.left {
+	margin-right:5px;
+	display:block;
+	float:left;
+	margin-top:1px;
+	width:18px;
+	height:18px;
+	background:url(images/product-nav.png) 0 0 no-repeat;
+}
+#only_lrhandler a.left:hover {
+	background:url(images/product-nav.png) 0 -18px no-repeat;
+}
+#only_lrhandler a.right {
+	display:block;
+	float:left;
+	margin-top:1px;
+	width:18px;
+	height:18px;
+	background:url(images/product-nav.png) -18px 0 no-repeat;
+}
+#only_lrhandler a.right:hover {
+	background:url(images/product-nav.png) -18px -18px no-repeat;
+}
+</style>
+</head>
+<body>
+<div id="page">
+  <h1>Slider.js-<span class="subtitle">A simple javascript library switching your content! </span></h1>
+  <div id="main">
+  <div class="code"><span style="color:red">ATTENTION:</span>V11.421发布，请<a href="#page_download">下载最新版</a>//修正了参数初始化时的一个bug</div>
+  	<div class="code"><span style="color:red">ATTENTION:</span>V11.419发布，请<a href="#page_download">下载最新版//修正了内置slide效果有时不能回到正确位置的bug</a></div>
+    <div class="code">下面的幻灯效果只用了一行代码: new Slider("slideContent", "slideHandler", 3, 780).start(); </div>
+    <div style="position:relative;width:780px; height:150px;margin-top:10px; overflow:hidden">
+      <div id="slideHandler"></div>
+      <div id="slideContent"> <img src="images/cloud.jpg" alt="slider.js" /></div>
+    </div>
+    <h1 id="page_intro">介绍</h1>
+    <p> 由于工作需要，我需要一个类似幻灯效果的东西，以前都是用flash壳实现，有一些弊端，比如：</p>
+    <ol>
+      <li>客户端必须安装flash插件</li>
+      <li>有的flash壳体积比较大</li>
+      <li>兼容所有浏览器比较繁琐,通过W3C验证比较麻</li>
+      <li>传统的方法比如用SWFObject.js。还需加载额外javascript代码.</li>
+    </ol>
+   <p> 对于一些简单的幻灯，或者切换效果，可以用js实现，效率并不是问题，即使在IE6上。以前写过一些，都是头疼医头脚疼医脚，并没有想过扩展性问题，也没有封装。也用过一些其他的类库，比如<a href="http://www.popub.net/script/MSClass.html">MSClass</a>.早期也用过jquery的一些插件，现在想想，简直就是噩梦，一个100行以内就能解决的小问题，还用jquery这种重型武器？简直就是浪费,要充分考虑到在中国还有很多地方的网速并不给力。总之，我觉得自己写一个类库，一来自己练习一些，二来希望能被复用，对大家能有所帮助。
+    </p>
+    <p> Slide效果可以想象成投过窗子看天边飘过的白云。窗子的大小是一定的，但是飘过的白云却很大，白云滑动，就产生了slide效果。一般来说，实现Slide效果，带该包括但不限于以下几种方法：</p>
+    <ol>
+      <li> 窗子的position设成relative。overflow设成hidden。白云的position设置成absolute。然后改变白云的top和left。 </li>
+      <li> 改变白云的scrollTop和scrollLeft </li>
+      <li>改变白云的marginleft</li>
+    </ol>
+   <p> 注：后两种无需白云position设置成absolute.
+    </p>
+    <p> 在slider.js中。我使用了第一种方法，slider.js不能帮你动态构造窗子和白云。因为在dom加载完后动态设置样式可能会产生dom元素抖动，所以索性，我就认为你已经把窗子和白云都准备好了。slider.js帮你在实现白云自动slide和手动slide。 </p>
+    <h1 id="page_how">如何使用</h1>
+    <p>我们来看上方给出的例子。该示例的html是这样的。</p>
+    <div class="code" style="text-align:left"> &lt;div style=&quot;position:relative;width:780px; height:150px;margin-top:10px; overflow:hidden&quot;&gt;&lt;!--这个是构造的窗子--&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id=&quot;<span style="color:red">slideHandler</span>&quot;&gt;&lt;/div&gt;&lt;!--这个是放翻页按钮的地方,动态生成翻页按钮,可以通过CSS定义样式--&gt;<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id=&quot;<span style="color:red">slideContent</span>&quot;&gt; &lt;img src=&quot;images/image1.jpg&quot; /&gt; &lt;img src=&quot;images/image2.jpg&quot; /&gt; &lt;img src=&quot;images/image3.jpg&quot; /&gt; &lt;/div&gt;<br />
+      &lt;/div&gt; </div>
+    <p>所用的代码是：</p>
+    <div class="code"> new Slider("slideContent", "slideHandler", 3, 780).start(); <br />
+      new Slider(白云ID, 翻页按钮容器, 有几屏, 每一屏宽(高)度).start();</div>
+    <p> 在Slider.js的实现中，我用了闭包和原形来模拟OOP,
+      参数可以通过构造函数传入，也可以通过this.XXX设置。所以也就有了下面两种设置方法。</p>
+    <div class="code" style="text-align:left">
+      <p>Slider(contentID, handlerID, pageNum, onePageWidth, direction, step, speed) </p>
+      <p>其中前四个是必选的。上面已经介绍过了。direction为空表示方向是左右，否则是上下。step表示没一次移动的像素。speed表示每个*ms移动一次。</p>
+    </div>
+    <p>也可以通过this设置。如：</p>
+    <div class="code" style="text-align:left"> var s= new Slider("slideContent", "slideHandler", 3, 780);<br/>
+      s.direction="v";<br/>
+      s.step=3;<br/>
+      s.speed=10;<br/>
+      s.start();<br/>
+    </div>
+    <p>然后再说start()方法。可以传入两个参数。start(duration, transformEffect)。duration为0表示不自动变换，transformEffect表示变换效果。默认是slide还有fade和none。当然也可以覆盖自带的变换效果，通过s.transformFn=function(id, value, from, to, callback)。</p>
+    <h1 id="page_download">下载</h1>
+    <p> Slider.js最新的版本是11.415.您可以在这里下载<a href="Slider.js">Slider.js</a>或者<a href="slider.zip">示例代码</a> </p>
+    <h1 id="page_example">示例</h1>
+    <p>1.垂直方向滑动。如taobao首页</p>
+    <div style="background:1px solid #0CF;width:490px;height:170px; position:relative; overflow:hidden;">
+      <div id="taobao_handler"></div>
+      <div id="taobao_content"> <img alt="slider.js" src="images/taobao1.jpg" /> <img alt="slider.js" src="images/taobao2.jpg" /> <img alt="slider.js" src="images/taobao3.jpg" /> <img alt="slider.js" src="images/taobao4.jpg" /> </div>
+    </div>
+    <div class="code" style="text-align:left"> new Slider("taobao_content", "taobao_handler", 4,170,"v" ).start();//加了一个参数：表示方向。 </div>
+    <p>2.Tab效果</p>
+    <div style="border:1px solid #D8D8D8;width:300px; height:126px;position:relative; overflow:hidden"  >
+      <div id="tab_handler"> </div>
+      <div id="tab_content">
+        <div>Tab1里面的内容。其实就是一个div。放任何内容比如
+          <input />
+        </div>
+        <div>Tab2里面的内容
+          <textarea cols="10" rows="2">你好，世界！</textarea>
+        </div>
+        <div>
+          <h1>Tab3</h1>
+        </div>
+        <div>
+          <h1>Tab4</h1>
+        </div>
+        <div>
+          <h1>Tab5</h1>
+        </div>
+      </div>
+    </div>
+    <div class="code"  style="text-align:left"> var tabSlider=new Slider("tab_content", "tab_handler", 5,300);<br/>
+      tabSlider.rendPageNav=function(i){//覆盖导航按钮。默认是页数如1/2/3。<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;return ["公告","论坛","规则","安全保障","公益"][i];<br/>
+      }<br/>
+      tabSlider.changeEvent="onmouseover";//改变触发事件。默认是onclick<br/>
+      tabSlider.start(0,"none");//第一个参数表示不自动切换。第二个参数表示不使用效果.<br/>
+    </div>
+    <p>3.另外一种自带的效果：fade切换</p>
+    <div style=" position:relative;width:230px;height:179px; overflow:hidden">
+      <div id="fade_handler"></div>
+      <div id="fade_content"> <img alt="slider.js" src="images/image1.jpg" /> <img alt="slider.js" src="images/image2.jpg" /> <img alt="slider.js" src="images/image3.jpg" /> <img alt="slider.js" src="images/image4.jpg" /> </div>
+    </div>
+    <div class="code" style="text-align:left"> new Slider("fade_content", "fade_handler", 4,230).start(3000,"fade");<br/>
+      //start的第二个参数指定效果。Slider.js实现了三种效果：默认的slide、还有fade和noeffct。 </div>
+    <p>4.带左右箭头导航</p>
+    <div style=" position:relative;width:230px;height:200px; overflow:hidden">
+      <div id="lr_handler"></div>
+      <div id="lr_content"> <img alt="slider.js" src="images/image1.jpg" /> <img alt="slider.js" src="images/image2.jpg" /> <img alt="slider.js" src="images/image3.jpg" /> <img alt="slider.js" src="images/image4.jpg" /> </div>
+    </div>
+    <div style="text-align:left" class="code"> var lrSilder=new Slider("lr_content", "lr_handler", 4, 230);<br/>
+      lrSilder.leftAndRightArrow=true;//设置显示左右导航。<br/>
+      lrSilder.rendPageNav = function(i){return ""}//覆盖默认的数字导航<br/>
+      lrSilder.start();<br/>
+    </div>
+    <p>5.甚至也可以只剩下左右箭头导航，比如：</p>
+    <div style="width:250px; height:20px; position:relative; overflow:hidden; border:1px solid #D8D8D8; float:left;">
+      <div id="only_lrcontent"> <a href="http://www.21shsb.net/news/1.html" target="_blank">反击式破碎机在我国的技术突破和不足</a> <a href="http://www.21shsb.net/news/49.html" target="_blank">防患于未然&mdash;&mdash;预防破碎机故障六步走</a> <a target="_blank" href="http://www.21shsb.net/news/5.html">圆锥式破碎机在矿山机械中的发展趋势</a> </div>
+    </div>
+    <div id="only_lrhandler"></div>
+    <div style="clear:both"></div>
+    <div style="text-align:left" class="code"> var onlylrSlider=new Slider("only_lrcontent", "only_lrhandler", 3, 250);<br/>
+      onlylrSlider.leftAndRightArrow=true;//显示左右导航按钮<br/>
+      onlylrSlider.pageHandler=false;//不显示页数导航<br/>
+      onlylrSlider.start(2000,"fade"); </div>
+    <h1 id="page_api">API</h1>
+    <p> 可以覆盖(类似于OOP里面的override)对象的方法，来实现自己的效果。推荐可以覆盖的属性包括: </p>
+    <div class="code" style="text-align:left"> changeEvent: "onclick"//切换的事件。其他包括onmouseover等等。<br/>
+      duration: 6000//更改默认自动切换事件。0便是不自动切换<br/>
+      direction: 0//变换方向。方向=direction?"垂直方向":"水平方向".你懂得。<br/>
+      rendPageNav:function(i){}//我告诉你这个地i个。你告诉我如何表现i。默认的是变成(i+1).见<a href="#tab_content">tabSlide</a><br/>
+      rendNav:function(i){}//同上。我告诉你当前显示的是第i个。你告诉我如何更改当前导航按钮的样式。默认的是把class设置成current<br/>
+      initHandler：function(){}//初始化导航按钮。默认是加上一些a标签，并添加事件。<br/>
+      toPage:function(pageNum){}//切换到那一页。<br/>
+      <span style="color:red">transformFn:</span> function(id, value, from, to, callback){}<br/>
+      //最重要的函数。id表示要被改变的元素id。value：那个值被改变，一般是left或者top。从from改变到to。callback是切换完成后要的回调函数，一般是从新计时，开始自动切换。所有的切换效果都是这个函数实现的。 </div>
+    <h1 id="page_todo">TODO</h1>
+    <p>不同浏览器定时机制不一样。比如IE6明显比chrome慢。这就是下一步要解决的问题。如果您有什么好的想法，欢迎<a href="#page_about">联系我</a></p>
+    <h1 id="page_about">关于作者</h1>
+    <p>某男，非技术问题，诚也勿扰。我的联系方式</p>
+    <ol>
+      <li>个人主页 <a href="http://gf-zj.com/">http://gf-zj.com/</a></li>
+      <li>我的微博<a href="http://t.qq.com/hellouniverse">http://t.qq.com/hellouniverse</a></li>
+      <li>我的邮箱<a href="mailto:hellouniverse@qq.com">hellouniverse#qq.com</a></li>
+    </ol>
+    <h1 id="page_cr">版权问题</h1>
+    <p>所有代码都是我一行一行的在eclipse里面敲出来的。思想参考了很多别人的代码，Slide.js公开放到互联网上，本人放弃所有权利，也不承担任何责任。您可以任意更改、复制、分发，这都不关我的事情。如果您能保留来源说明，我将万分感谢。</p>
+    <h1 id="faq">常见问题</h1>
+    <p>1.初始化html应注意什么问题？</p>
+    <div class="code" style="text-align:left">
+      <ol>
+        <li>如果handler和content在同一个地方，一定要设置handler的z-index,否则容易被content内容挡住。</li>
+        <li>在不加载slide.js的情况下，应保证您的html表现正确。</li>
+        <li>content的各个页面元素的margin应该为0.也可以不为0，但是小心切换的时候留边。</li>
+      </ol>
+    </div>
+  </div>
+  <div id="nav">
+    <ul>
+      <li><a href="#page_intro">介绍</a></li>
+      <li><a href="#page_how">如何使用</a></li>
+      <li><a href="#page_download">下载</a></li>
+      <li><a href="#page_example">示例</a></li>
+      <li><a href="#page_api">API</a></li>
+      <li><a href="#page_todo">TODO</a></li>
+      <li><a href="#page_about">关于作者</a></li>
+      <li><a href="#page_cr">版权问题</a></li>
+    </ul>
+    <p style="margin: 0.7em 0px 1em 2em;">
+   
+    <a href="slider.zip"><img src="images/download.jpg" alt="download Slider.js" /></a><br/>
+    <a href="http://validator.w3.org/check?uri=referer"> <img
+        src="http://www.w3.org/Icons/valid-xhtml10"
+        alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
+        
+  </p>
+    
+  </div>
+  <div style="clear:both"></div>
+</div>
+<script src="Slider.js" type="text/javascript" ></script>
+<script type="text/javascript">
+new Slider("slideContent", "slideHandler", 3, 780).start();
+new Slider("taobao_content", "taobao_handler", 4, 170, "v").start();
+
+var tabSlider = new Slider("tab_content", "tab_handler", 5, 300);
+tabSlider.rendPageNav = function(i){
+    return ["公告", "论坛", "规则", "安全保障", "公益"][i];
+}
+tabSlider.changeEvent = "onmouseover";
+tabSlider.start(-1, "none");
+
+new Slider("fade_content", "fade_handler", 4, 230).start(3000, "fade");
+
+
+var lrSilder=new Slider("lr_content", "lr_handler", 4, 230);
+lrSilder.leftAndRightArrow=true;
+lrSilder.rendPageNav = function(i){return ""}
+lrSilder.start();
+
+var onlylrSlider=new Slider("only_lrcontent", "only_lrhandler", 3, 250);
+onlylrSlider.leftAndRightArrow=true;
+onlylrSlider.pageHandler=false;
+onlylrSlider.start(2000,"slide");
+</script>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F30b3261e480e00d198dadb383df4bea3' type='text/javascript'%3E%3C/script%3E"));
+</script>
+</body>
+</html>
