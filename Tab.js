@@ -79,6 +79,7 @@
 			for ( var i = 0, len = this.hc.length; i < len; i++) {
 				this.hc[i][this.triggle] = (function(tab, i) {
 					return function() {
+            tab.hc[i].blur();
 						tab.fire(i);
 					};
 				})(this, i);

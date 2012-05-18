@@ -18,7 +18,7 @@
         this.onePageWidth = onePageWidth;
         this.step = step || 10;
         this.direction = direction;
-        this.speed = speed || 1;
+        this.speed = speed || 10;
     }
     var $ = function(id){
         return document.getElementById(id);
@@ -78,7 +78,11 @@
         currentPage: 0,
         transformEffect: "",
         intervalId: 0,
+        showhandlerID:false,
         duration: 6000,
+        canMoveNow:/**if you click before transfrom end,just ignore**/true,
+        canAutoMoveNow:true,
+        stopMoveWhenMouseOver:/**when mouse over,stop move**/true,
         /**
          * anything can case to false stands for horizontal.and the others are vertical.
          */
@@ -107,9 +111,9 @@
                 if ((!tempThis.pageHandler) && i != -1 && i != tempThis.pageNum) 
                     continue;
                 var a = document.createElement("a");
-                a.href = "#nogo";
+                a.href = "javascript:void(0)";
                 a.className = (i == -1 ? "left" : (i == 0 ? "current" : (i == this.pageNum ? "right" : "")));
-                
+                if(tempThis.showhandlerID)a.id=this.handlerID+"_"+i;
                 /**
                  * must use closure here to keep i.
                  * inspired by:Listing 2-16,page 29,<Pro JavaScript Techniques>,John Resig
@@ -130,9 +134,9 @@
                 toNum = this.currentPage + 1;
             if (toNum === "-1") 
                 toNum = this.currentPage - 1;
-            
-            if (this.currentPage == toNum) 
+            if (this.currentPage == toNum||(!this.canMoveNow)) 
                 return;
+            this.canMoveNow=false;
             if (toNum >= this.pageNum) 
                 toNum = toNum % this.pageNum;
             if (toNum < 0) 
@@ -143,10 +147,16 @@
             var currentPos = -this.currentPage * this.onePageWidth;
             this.stopAutoSwitch();
             var value = this.direction ? "top" : "left";
-            this.transformFn(this.contentID, value, currentPos, toPos, this.startAutoSwitch);
+            var tempThis=this;
+            this.transformFn(this.contentID, value, currentPos, toPos, function(){
+              if (style(tempThis.contentID, value) != toPos) 
+                  style(tempThis.contentID, value, toPos + "px");
+              tempThis.canMoveNow=true;
+              tempThis.startAutoSwitch();
+            });
             //fix some pix
-            if (style(this.contentID, value) != toPos) 
-                style(this.contentID, value, toPos + "px");
+            //if (style(this.contentID, value) != toPos) 
+            //    style(this.contentID, value, toPos + "px");
             this.currentPage = toNum;
         },
         /**
@@ -162,18 +172,18 @@
             switch (this.transformEffect) {
                 case "fade":
                     var tempThis = this;
-                    //fade from 1 to 0 to 1,i change from 1 to 0 to -1
+                    //fade from 1 to 0 to 1,i change from 1 to 0 to -1                    
                     (function fadeEffect(i){
-                        i = i - 5;
-                        if (i == -100) {
+                        i = i - tempThis.step;
+                        if (i == 0) {
                             fade(id, 100);
                             callback.call(tempThis);
                         }
                         else {
-                            if (i == 0) {
-                                style(id, value, to + "px");
+                            if (i == 50) {
+                               style(id, value, to + "px");
                             }
-                            fade(id, i >= 0 ? i : -i);
+                            fade(id, i >= 50 ? i : 100-i);
                             
                             window.setTimeout(function(){
                                 fadeEffect(i);
@@ -208,13 +218,20 @@
         },
         
         winonload: function(duration){
+            if(this.stopMoveWhenMouseOver){
+              var tempThis=this;
+              $(this.contentID).onmouseover=function(){tempThis.canAutoMoveNow=false;tempThis.stopAutoSwitch();};
+              $(this.handlerID).onmouseover=function(){tempThis.canAutoMoveNow=false;tempThis.stopAutoSwitch();};
+              
+              $(this.contentID).onmouseout=function(){tempThis.canAutoMoveNow=true;tempThis.startAutoSwitch();};
+              $(this.handlerID).onmouseout=function(){tempThis.canAutoMoveNow=true;tempThis.startAutoSwitch();};
+            }
             style(this.contentID, "position", "absolute");
             this.initHandler();
             this.startAutoSwitch();
-            return {};//it's necessary for IE6
         },
         startAutoSwitch: function(){
-            if (this.duration > 0) {
+            if (this.duration > 0&&this.canAutoMoveNow) {
                 var tempThis = this;
                 this.intervalId = window.setInterval(function(){
                     tempThis.toPage(tempThis.currentPage + 1)
@@ -228,11 +245,8 @@
         start: function(duration, transformEffect){
             this.duration = duration || 3000;
             this.transformEffect = transformEffect || "slide";
-            addEvent(window, 'load', this.winonload(), false);
+            addEvent(window, 'load', (function(slider){return function(){slider.winonload()}})(this), false);
         }
     };
     window.Slider = Slider;
 })(window)
-
-
-
