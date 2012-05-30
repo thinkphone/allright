@@ -111,7 +111,7 @@
                 if ((!tempThis.pageHandler) && i != -1 && i != tempThis.pageNum) 
                     continue;
                 var a = document.createElement("a");
-                a.href = "javascript:void(0)";
+                a.style.cursor="pointer";
                 a.className = (i == -1 ? "left" : (i == 0 ? "current" : (i == this.pageNum ? "right" : "")));
                 if(tempThis.showhandlerID)a.id=this.handlerID+"_"+i;
                 /**
@@ -218,7 +218,10 @@
         },
         
         winonload: function(duration){
-            if(this.stopMoveWhenMouseOver){
+            style(this.contentID, "position", "absolute");
+            this.initHandler();
+            
+             if(this.stopMoveWhenMouseOver){
               var tempThis=this;
               $(this.contentID).onmouseover=function(){tempThis.canAutoMoveNow=false;tempThis.stopAutoSwitch();};
               $(this.handlerID).onmouseover=function(){tempThis.canAutoMoveNow=false;tempThis.stopAutoSwitch();};
@@ -226,8 +229,6 @@
               $(this.contentID).onmouseout=function(){tempThis.canAutoMoveNow=true;tempThis.startAutoSwitch();};
               $(this.handlerID).onmouseout=function(){tempThis.canAutoMoveNow=true;tempThis.startAutoSwitch();};
             }
-            style(this.contentID, "position", "absolute");
-            this.initHandler();
             this.startAutoSwitch();
         },
         startAutoSwitch: function(){
@@ -244,7 +245,7 @@
         },
         start: function(duration, transformEffect){
             this.duration = duration || 3000;
-            this.transformEffect = transformEffect || "slide";
+            this.transformEffect = transformEffect || "fade";
             addEvent(window, 'load', (function(slider){return function(){slider.winonload()}})(this), false);
         }
     };
