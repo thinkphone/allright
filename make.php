@@ -33,7 +33,7 @@ EOF;
 }
 
 file_put_contents("/opt/lampp/etc/extra/httpd-vhosts.conf",$s);
-echo "i found {$i} sites in total\nÕýÔÚÖØÆôapache·þÎñÆ÷¡£ÇëÉÔºó¡£¡£\n";
+echo "i found {$i} sites in total\nå¼€å§‹é‡å¯apcheã€‚ã€‚ã€‚\n";
 exec("/opt/lampp/lampp restartapache",$out);
 foreach($out as $v)echo $v."\n";
 ?>
