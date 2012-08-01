@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
+//写了一篇日志，具体可见http://gfzj.sinaapp.com/310.html
 public class DouDiZhuTest {
 	public static void main(String[] args) {
 		List<String> pai = Arrays.asList(new String[] { "A-1", "A-2", "A-3",
